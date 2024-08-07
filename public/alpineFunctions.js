@@ -195,8 +195,7 @@ document.addEventListener('alpine:init', () => {
                 const result = await this.updateCarsAPI();
                 if (result) {
                     console.log('Car updated successfully:', result);
-                    await this.postCarsAPI();
-                    await this.loadCarsData()
+                 this.postCarsAPI();
                 } else {
                     console.error('Failed to update car.');
                 }
