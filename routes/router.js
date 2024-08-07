@@ -46,6 +46,18 @@ router.post('/', (req, res) => {
   });
   
 
+  router.delete('/reg_number', (req, res) => {
+    const { reg_number } = req.query;
+  
+    const carIndex = cars.findIndex((car) => car.reg_number === reg_number);
+  
+    if (carIndex !== -1) {
+      const deletedCar = cars.splice(carIndex, 1);
+      res.send(`${deletedCar[0].make} ${deletedCar[0].model} ${deletedCar[0].reg_number} ${deletedCar[0].color} has been deleted from the Database`);
+    } else {
+      res.status(404).send({ message: 'Car not found' });
+    }
+  });
 
 
 export default router;
