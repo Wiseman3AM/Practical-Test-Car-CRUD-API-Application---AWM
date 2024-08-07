@@ -1,0 +1,4 @@
+### 
+GET GET http://localhost:5000/cars/reg_number/CL%2061045
+
+Content-Type: application/json

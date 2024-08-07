@@ -1,4 +1,4 @@
-var carsData =   [ {
+var cars =   [ {
     "color": "white",
     "make": "Volkswagen",
     "model": "Polo",
@@ -148,8 +148,10 @@ var carsData =   [ {
     "make": "Toyota",
     "model": "Corolla",
     "reg_number": "CK 41166"
-  }]
-  
+  }];
+
+
+export default cars;
 
   
   
