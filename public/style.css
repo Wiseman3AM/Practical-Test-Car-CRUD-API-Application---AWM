@@ -1,0 +1,60 @@
+body {
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    background-color: white;
+}
+
+h1,
+h2 {
+    text-align: center;
+    text-shadow: -2px 0.5px 2px rgb(77, 65, 65);
+}
+
+.data {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.data > div {
+    flex: 1 1 30%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #71ffac;
+    box-shadow: 0px 0px 3px 1px #8c8a8b;
+}
+
+.addCarsToData,
+.selectCar,
+.removeCars,
+.updateCar {
+    background-color: white;
+    box-sizing: border-box;
+    border: 1px solid white;
+    box-shadow: 0px 0px 3px 1px #8c8a8b;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.inputs {
+    border: 1px solid white;
+    box-shadow: 0px 0px 3px 0.5px #8c8a8b;
+    margin: 5px 0;
+}
+
+button {
+    background-color: white;
+    border: 1px solid white;
+    box-shadow: 0px 0px 3px 0.5px #8c8a8b;
+    margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+    .data {
+        display: block;
+    }
+}

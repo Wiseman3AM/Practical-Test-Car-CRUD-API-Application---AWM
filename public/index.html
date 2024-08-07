@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script defer src="https://unpkg.com/alpinejs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./alpineFunctions.js"></script>
+
+
+</head>
+
+<body x-data="functions" x-cloak>
+
+    <h1> CURD API</h1>
+
+    <div>
+        <input class="showAreaCheckbox" id="paarlCheckbox" type="checkbox" :checked="showPaarlData"
+            @click="showPaarlData = !showPaarlData">
+        <label for="paarlCheckbox">Paarl</label>
+
+        <input class="showAreaCheckbox" id="bellvilleCheckbox" type="checkbox" :checked="showBellvilleData"
+            @click="showBellvilleData = !showBellvilleData">
+        <label for="bellvilleCheckbox">Bellville</label>
+
+        <input class="showAreaCheckbox" id="stellenboschCheckbox" type="checkbox" :checked="showStellenboschData"
+            @click="showStellenboschData = !showStellenboschData">
+        <label for="stellenboschCheckbox">Stellenbosch</label>
+
+        <input class="showAreaCheckbox" id="malmesburyCheckbox" type="checkbox" :checked="showMalmesburyData"
+            @click="showMalmesburyData = !showMalmesburyData">
+        <label for="malmesburyCheckbox">Malmesbury</label>
+
+        <input class="showAreaCheckbox" id="capetownCheckbox" type="checkbox" :checked="showCapetownData"
+            @click="showCapetownData = !showCapetownData">
+        <label for="capetownCheckbox">Capetown</label>
+
+        <input class="showAreaCheckbox" id="kuilsriverCheckbox" type="checkbox" :checked="showKuilsriverData"
+            @click="showKuilsriverData = !showKuilsriverData">
+        <label for="kuilsriverCheckbox">Kuilsriver</label>
+
+        <input class="showAreaCheckbox" id="otherPlacesCheckbox" type="checkbox" :checked="showOtherPlacesData"
+            @click="showOtherPlacesData = !showOtherPlacesData">
+        <label for="otherPlacesCheckbox">Other Places</label>
+
+    </div>
+
+
+
+
+
+
+    <div class="data">
+
+
+
+
+        <div x-show="showPaarlData">
+            <h2>Cars from Paarl</h2>
+            <template x-for="car in carsData" :key="car.reg_number">
+                <div class="car-item" x-show="car.reg_number.startsWith('CJ')">
+                    <h3 x-text="car.make + ' ' + car.model"></h3>
+                    <p x-text="'Registration: ' + car.reg_number"></p>
+                    <p x-text="'Color: ' + car.color"></p>
+                </div>
+            </template>
+
+        </div>
+
+
+        <div x-show="showBellvilleData">
+            <h2>Cars from Bellville</h2>
+
+            <template x-for="car in carsData" :key="car.reg_number">
+                <div class="car-item" x-show="car.reg_number.startsWith('CY')">
+                    <h3 x-text="car.make + ' ' + car.model"></h3>
+                    <p x-text="'Registration: ' + car.reg_number"></p>
+                    <p x-text="'Color: ' + car.color"></p>
+                </div>
+            </template>
+        </div>
+
+
+
+
+        <div x-show="showStellenboschData">
+            <h2>Cars from Stellenbosch</h2>
+
+            <template x-for="car in carsData" :key="car.reg_number">
+                <div class="car-item" x-show="car.reg_number.startsWith('CL')">
+                    <h3 x-text="car.make + ' ' + car.model"></h3>
+                    <p x-text="'Registration: ' + car.reg_number"></p>
+                    <p x-text="'Color: ' + car.color"></p>
+                </div>
+            </template>
+
+        </div>
+
+        <div x-show="showMalmesburyData">
+            <h2>Cars from Malmesbury</h2>
+
+            <template x-for="car in carsData" :key="car.reg_number">
+                <div class="car-item" x-show="car.reg_number.startsWith('CK')">
+                    <h3 x-text="car.make + ' ' + car.model"></h3>
+                    <p x-text="'Registration: ' + car.reg_number"></p>
+                    <p x-text="'Color: ' + car.color"></p>
+                </div>
+            </template>
+
+        </div>
+
+        <div x-show="showCapetownData">
+            <h2>Cars from Capetown</h2>
+
+            <template x-for="car in carsData" :key="car.reg_number">
+                <div class="car-item" x-show="car.reg_number.startsWith('CA')">
+                    <h3 x-text="car.make + ' ' + car.model"></h3>
+                    <p x-text="'Registration: ' + car.reg_number"></p>
+                    <p x-text="'Color: ' + car.color"></p>
+                </div>
+            </template>
+
+        </div>
+
+        <div x-show="showKuilsriverData">
+            <h2>Cars from kuilsriver</h2>
+
+            <template x-for="car in carsData" :key="car.reg_number">
+                <div class="car-item" x-show="car.reg_number.startsWith('CF')">
+                    <h3 x-text="car.make + ' ' + car.model"></h3>
+                    <p x-text="'Registration: ' + car.reg_number"></p>
+                    <p x-text="'Color: ' + car.color"></p>
+                </div>
+            </template>
+
+        </div>
+
+
+        <div x-show="showOtherPlacesData">
+            <h2>Cars from Other Places</h2>
+            <template x-for="car in carsData" :key="car.reg_number">
+                <div class="car-item"
+                    x-show="!car.reg_number.startsWith('CJ') && !car.reg_number.startsWith('CY') && !car.reg_number.startsWith('CL') && !car.reg_number.startsWith('CK') && !car.reg_number.startsWith('CA') && !car.reg_number.startsWith('CF')">
+                    <h3 x-text="car.make + ' ' + car.model"></h3>
+                    <p x-text="'Registration: ' + car.reg_number"></p>
+                    <p x-text="'Color: ' + car.color"></p>
+                </div>
+            </template>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+    
+
+
+
+
+
+
+    <div class="addCarsToData">
+
+        <label for="registration">Registration: </label>
+        <input x-model="regNumber" id="registration">
+
+        <label for="make">Brand: </label>
+        <input x-model=" carMake" id="make">
+
+        <label for="model">Model: </label>
+        <input x-model=" carModel" id="model">
+
+        <label for="color">Color: </label>
+        <input x-model="carColor" id="color">
+
+        <button @click=" addCar()">Click to add a car</button>
+
+    </div>
+
+
+    <div class="selectCar">
+        <button @click="resetValues(); search = true">Clear data</button>
+
+
+        <div x-show="search">
+            <label for="registration">Registration: </label>
+            <input x-model="regNumber" id="registration">
+            <button @click=" selectCar()">Search</button>
+        </div>
+
+        <div class="car-item" x-show="search">
+            <h3 x-text="selectedCar.make + ' ' + selectedCar.model"></h3>
+            <p x-text="'Registration: ' + selectedCar.reg_number"></p>
+            <p x-text="'Color: ' + selectedCar.color"></p>
+        </div>
+
+    </div>
+
+
+    <div class="removeCars">
+
+
+        <button @click="resetValues(); remove = true">Clear data</button>
+
+        <div x-show="remove">
+            <label for="registration">Registration: </label>
+            <input x-model="regNumber" id="registration">
+        </div>
+        <button @click=" removeCar()">Remove</button>
+
+    </div>
+
+    <div class="updateCar">
+
+        <button @click="resetValues(); update = true">Clear data</button>
+
+        <div>
+            <label for="registration">Registration: </label>
+            <input x-model="regNumber" id="registration">
+
+            <label for="make">Brand: </label>
+            <input x-model=" carMake" id="make">
+
+            <label for="model">Model: </label>
+            <input x-model=" carModel" id="model">
+
+            <label for="color">Color: </label>
+            <input x-model="carColor" id="color">
+        </div>
+
+        <button @click="updateCar()">Edit car</button>
+    </div>
+
+</body>
+
+</html>

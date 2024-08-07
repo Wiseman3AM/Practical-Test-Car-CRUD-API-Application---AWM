@@ -59,5 +59,21 @@ router.post('/', (req, res) => {
     }
   });
 
+  // Update a car by reg_number
+router.put('/reg_number', (req, res) => {
+  const { reg_number } = req.query;
+  const updatedCarData = req.body;
+
+  const carIndex = cars.findIndex((car) => car.reg_number === reg_number);
+
+  if (carIndex !== -1) {
+      const updatedCar = { ...cars[carIndex], ...updatedCarData };
+      cars[carIndex] = updatedCar;
+      res.send(`${updatedCar.make} ${updatedCar.model} ${updatedCar.reg_number} ${updatedCar.color} has been updated in the Database`);
+  } else {
+      res.status(404).send({ message: 'Car not found' });
+  }
+});
+
 
 export default router;
