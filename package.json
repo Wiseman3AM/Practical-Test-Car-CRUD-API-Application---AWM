@@ -7,7 +7,7 @@
   "license": "AGPL-version-3.0",
   "private": false,
   "engines": {
-    "node": ">= 14.0.0",
+    "node": ">= 20.0.0",
     "npm": ">= 6.0.0"
   },
   "homepage": "",
@@ -24,8 +24,9 @@
   },
   "contributors": [],
   "scripts": {
-    "dev": "",
-    "test": ""
+    "dev": "nodemon index.js",
+  "test": "mocha",
+   "start": "node index.js"
   },
   "dependencies": {
     "assert": "^2.1.0",
