@@ -19,149 +19,69 @@
     <h1 class="title"> CURD API</h1>
 
     <div class="check">
-        <input class="showAreaCheckbox" id="paarlCheckbox" type="checkbox" :checked="showPaarlData"
-            @click="showPaarlData = !showPaarlData">
+        <input class="showAreaCheckbox" id="paarlCheckbox" type="checkbox" :checked="showPaarlData" @click="showPaarlData = !showPaarlData">
         <label for="paarlCheckbox">Paarl</label>
 
-        <input class="showAreaCheckbox" id="bellvilleCheckbox" type="checkbox" :checked="showBellvilleData"
-            @click="showBellvilleData = !showBellvilleData">
+        <input class="showAreaCheckbox" id="bellvilleCheckbox" type="checkbox" :checked="showBellvilleData" @click="showBellvilleData = !showBellvilleData">
         <label for="bellvilleCheckbox">Bellville</label>
 
-        <input class="showAreaCheckbox" id="stellenboschCheckbox" type="checkbox" :checked="showStellenboschData"
-            @click="showStellenboschData = !showStellenboschData">
+        <input class="showAreaCheckbox" id="stellenboschCheckbox" type="checkbox" :checked="showStellenboschData" @click="showStellenboschData = !showStellenboschData">
         <label for="stellenboschCheckbox">Stellenbosch</label>
 
-        <input class="showAreaCheckbox" id="malmesburyCheckbox" type="checkbox" :checked="showMalmesburyData"
-            @click="showMalmesburyData = !showMalmesburyData">
+        <input class="showAreaCheckbox" id="malmesburyCheckbox" type="checkbox" :checked="showMalmesburyData" @click="showMalmesburyData = !showMalmesburyData">
         <label for="malmesburyCheckbox">Malmesbury</label>
 
-        <input class="showAreaCheckbox" id="capetownCheckbox" type="checkbox" :checked="showCapetownData"
-            @click="showCapetownData = !showCapetownData">
+        <input class="showAreaCheckbox" id="capetownCheckbox" type="checkbox" :checked="showCapetownData" @click="showCapetownData = !showCapetownData">
         <label for="capetownCheckbox">Capetown</label>
 
-        <input class="showAreaCheckbox" id="kuilsriverCheckbox" type="checkbox" :checked="showKuilsriverData"
-            @click="showKuilsriverData = !showKuilsriverData">
+        <input class="showAreaCheckbox" id="kuilsriverCheckbox" type="checkbox" :checked="showKuilsriverData" @click="showKuilsriverData = !showKuilsriverData">
         <label for="kuilsriverCheckbox">Kuilsriver</label>
 
-        <input class="showAreaCheckbox" id="otherPlacesCheckbox" type="checkbox" :checked="showOtherPlacesData"
-            @click="showOtherPlacesData = !showOtherPlacesData">
+        <input class="showAreaCheckbox" id="otherPlacesCheckbox" type="checkbox" :checked="showOtherPlacesData" @click="showOtherPlacesData = !showOtherPlacesData">
         <label for="otherPlacesCheckbox">Other Places</label>
-
     </div>
-
-
-
-
-
 
     <div class="data">
-
-
-
-
-        <div x-show="showPaarlData">
-            <h2>Cars from Paarl</h2>
-            <template x-for="car in carsData" :key="car.reg_number">
-                <div class="car-item" x-show="car.reg_number.startsWith('CJ')">
-                    <h3 x-text="car.make + ' ' + car.model"></h3>
-                    <p x-text="'Registration: ' + car.reg_number"></p>
-                    <p x-text="'Color: ' + car.color"></p>
-                </div>
-            </template>
-
-        </div>
-
-
-        <div x-show="showBellvilleData">
-            <h2>Cars from Bellville</h2>
-
-            <template x-for="car in carsData" :key="car.reg_number">
-                <div class="car-item" x-show="car.reg_number.startsWith('CY')">
-                    <h3 x-text="car.make + ' ' + car.model"></h3>
-                    <p x-text="'Registration: ' + car.reg_number"></p>
-                    <p x-text="'Color: ' + car.color"></p>
-                </div>
-            </template>
-        </div>
-
-
-
-
-        <div x-show="showStellenboschData">
-            <h2>Cars from Stellenbosch</h2>
-
-            <template x-for="car in carsData" :key="car.reg_number">
-                <div class="car-item" x-show="car.reg_number.startsWith('CL')">
-                    <h3 x-text="car.make + ' ' + car.model"></h3>
-                    <p x-text="'Registration: ' + car.reg_number"></p>
-                    <p x-text="'Color: ' + car.color"></p>
-                </div>
-            </template>
-
-        </div>
-
-        <div x-show="showMalmesburyData">
-            <h2>Cars from Malmesbury</h2>
-
-            <template x-for="car in carsData" :key="car.reg_number">
-                <div class="car-item" x-show="car.reg_number.startsWith('CK')">
-                    <h3 x-text="car.make + ' ' + car.model"></h3>
-                    <p x-text="'Registration: ' + car.reg_number"></p>
-                    <p x-text="'Color: ' + car.color"></p>
-                </div>
-            </template>
-
-        </div>
-
-        <div x-show="showCapetownData">
-            <h2>Cars from Capetown</h2>
-
-            <template x-for="car in carsData" :key="car.reg_number">
-                <div class="car-item" x-show="car.reg_number.startsWith('CA')">
-                    <h3 x-text="car.make + ' ' + car.model"></h3>
-                    <p x-text="'Registration: ' + car.reg_number"></p>
-                    <p x-text="'Color: ' + car.color"></p>
-                </div>
-            </template>
-
-        </div>
-
-        <div x-show="showKuilsriverData">
-            <h2>Cars from kuilsriver</h2>
-
-            <template x-for="car in carsData" :key="car.reg_number">
-                <div class="car-item" x-show="car.reg_number.startsWith('CF')">
-                    <h3 x-text="car.make + ' ' + car.model"></h3>
-                    <p x-text="'Registration: ' + car.reg_number"></p>
-                    <p x-text="'Color: ' + car.color"></p>
-                </div>
-            </template>
-
-        </div>
-
-
-        <div x-show="showOtherPlacesData">
-            <h2>Cars from Other Places</h2>
-            <template x-for="car in carsData" :key="car.reg_number">
-                <div class="car-item"
-                    x-show="!car.reg_number.startsWith('CJ') && !car.reg_number.startsWith('CY') && !car.reg_number.startsWith('CL') && !car.reg_number.startsWith('CK') && !car.reg_number.startsWith('CA') && !car.reg_number.startsWith('CF')">
-                    <h3 x-text="car.make + ' ' + car.model"></h3>
-                    <p x-text="'Registration: ' + car.reg_number"></p>
-                    <p x-text="'Color: ' + car.color"></p>
-                </div>
-            </template>
-        </div>
-
-
-
-
+        <table class="carsData" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 8px;">Make</th>
+                    <th style="border: 1px solid black; padding: 8px;">Model</th>
+                    <th style="border: 1px solid black; padding: 8px;">Registration</th>
+                    <th style="border: 1px solid black; padding: 8px;">Color</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="car in carsData" :key="car.reg_number">
+                    <tr x-show="(showPaarlData && car.reg_number.startsWith('CJ')) ||
+                                (showBellvilleData && car.reg_number.startsWith('CY')) ||
+                                (showStellenboschData && car.reg_number.startsWith('CL')) ||
+                                (showMalmesburyData && car.reg_number.startsWith('CK')) ||
+                                (showCapetownData && car.reg_number.startsWith('CA')) ||
+                                (showKuilsriverData && car.reg_number.startsWith('CF')) ||
+                                (showOtherPlacesData && !car.reg_number.startsWith('CJ') &&
+                                 !car.reg_number.startsWith('CY') &&
+                                 !car.reg_number.startsWith('CL') &&
+                                 !car.reg_number.startsWith('CK') &&
+                                 !car.reg_number.startsWith('CA') &&
+                                 !car.reg_number.startsWith('CF'))">
+                        <td style="border: 1px solid black; padding: 8px;" x-text="car.make"></td>
+                        <td style="border: 1px solid black; padding: 8px;" x-text="car.model"></td>
+                        <td style="border: 1px solid black; padding: 8px;" x-text="car.reg_number"></td>
+                        <td style="border: 1px solid black; padding: 8px;" x-text="car.color"></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
     </div>
 
 
 
 
 
-    
+
+
+
 
 
 
