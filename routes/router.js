@@ -79,8 +79,8 @@ router.put('/reg_number', (req, res) => {
 
 router.get('/mostPopularMake', (req, res) => {
   try {
-    const popularCar = mostPopularCar(cars); // Call the function with the existing cars array
-    res.json(popularCar); // Return the result as JSON
+    const popularCar = mostPopularCar(cars);
+    res.json(popularCar); 
   } catch (error) {
     res.status(500).send({ message: 'An error occurred while retrieving the most popular make.' });
   }
