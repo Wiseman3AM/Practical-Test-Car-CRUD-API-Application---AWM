@@ -1,5 +1,6 @@
 import express from 'express';
 import cars from '../cars/data.js'
+import mostPopularCar from '../function/mostPopularCar.js';
 
 
 
@@ -72,6 +73,16 @@ router.put('/reg_number', (req, res) => {
       res.send(`${updatedCar.make} ${updatedCar.model} ${updatedCar.reg_number} ${updatedCar.color} has been updated in the Database`);
   } else {
       res.status(404).send({ message: 'Car not found' });
+  }
+});
+
+
+router.get('/mostPopularMake', (req, res) => {
+  try {
+    const popularCar = mostPopularCar(cars); // Call the function with the existing cars array
+    res.json(popularCar); // Return the result as JSON
+  } catch (error) {
+    res.status(500).send({ message: 'An error occurred while retrieving the most popular make.' });
   }
 });
 

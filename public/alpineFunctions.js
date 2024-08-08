@@ -200,8 +200,27 @@ document.addEventListener('alpine:init', () => {
                     console.error('Failed to update car.');
                 }
             },
-            
 
+
+          /*   async fetchMostPopularMake() {
+                try {
+                    const response = await axios.get('/api/mostPopularMake');
+                    return response.data["Favorite car"];
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    return null; // Return null or a default value in case of error
+                }
+            },
+                async carApp() {
+
+
+                    this.fetchMostPopularMake();
+                    if ()
+                        return {
+                            favoriteCar: '',
+                        }
+                    }
+ */
 
 
 
