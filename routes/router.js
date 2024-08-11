@@ -77,14 +77,20 @@ router.put('/reg_number', (req, res) => {
 });
 
 
-router.get('/mostPopularMake', (req, res) => {
+router.post('/mostPopularMake', (req, res) => {
   try {
-    const popularCar = mostPopularCar(cars);
-    res.json(popularCar); 
+    const carsData = req.body.carsData; 
+
+    const popularCar = mostPopularCar(carsData);
+
+    res.json({
+      popular_car: popularCar,
+    }); 
   } catch (error) {
     res.status(500).send({ message: 'An error occurred while retrieving the most popular make.' });
   }
 });
+
 
 
 export default router;

@@ -8,6 +8,7 @@ document.addEventListener('alpine:init', () => {
             carModel: '',
             carColor: '',
             selectedCar: {},
+            mostPopular: {},
             showPaarlData: true,
             showBellvilleData: true,
             showStellenboschData: true,
@@ -175,6 +176,26 @@ document.addEventListener('alpine:init', () => {
                 this.update = false;
             },
 
+
+            async fetchMostPopularCarAPI() {
+                try {
+                    const response = await axios.post(`http://localhost:${this.port}/cars/carsData/mostPopularMake`, {
+                        carsData: this.carsData
+                    });
+                    this.mostPopular = response.data.popular_car;
+                    console.log('Most popular make:', this.mostPopular);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            },
+            
+            
+            mostPopular() {
+                this.fetchMostPopularCarAPI();
+            },
+            
+
+    
             async init() {
                 await this.loadCarsData(); 
             },
