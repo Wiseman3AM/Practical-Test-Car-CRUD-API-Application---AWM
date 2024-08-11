@@ -8,6 +8,7 @@
 
     <script defer src="https://unpkg.com/alpinejs"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <link rel="stylesheet" href="./style.css">
     <script src="./alpineFunctions.js"></script>
 
@@ -16,39 +17,125 @@
 
 <body x-data="functions" x-cloak>
 
-    <h1 class="title"> CURD API</h1>
 
-    <div class="check">
-        <input class="showAreaCheckbox" id="paarlCheckbox" type="checkbox" :checked="showPaarlData" @click="showPaarlData = !showPaarlData">
-        <label for="paarlCheckbox">Paarl</label>
+    <button class="toggle-sidebar-button" @click="sidebarVisible = true" x-show="!sidebarVisible"><ion-icon
+            name="grid-outline" style="font-size: 20px;"></ion-icon></button>
 
-        <input class="showAreaCheckbox" id="bellvilleCheckbox" type="checkbox" :checked="showBellvilleData" @click="showBellvilleData = !showBellvilleData">
-        <label for="bellvilleCheckbox">Bellville</label>
+    <div class="sidebar" x-show="sidebarVisible">
+        <button @click="sidebarVisible = false" x-show="sidebarVisible"><ion-icon name="grid-outline"
+                style="font-size: 20px;"></button>
 
-        <input class="showAreaCheckbox" id="stellenboschCheckbox" type="checkbox" :checked="showStellenboschData" @click="showStellenboschData = !showStellenboschData">
-        <label for="stellenboschCheckbox">Stellenbosch</label>
+        <div class="selectCar">
+            <button @click="resetValues(); search = !search; found = false">
+                <ion-icon name="search-outline"></ion-icon>
+            </button>
 
-        <input class="showAreaCheckbox" id="malmesburyCheckbox" type="checkbox" :checked="showMalmesburyData" @click="showMalmesburyData = !showMalmesburyData">
-        <label for="malmesburyCheckbox">Malmesbury</label>
+            <div x-show="search">
+                <label for="registration">Registration: </label>
+                <input x-model="regNumber" id="registration">
+                <button @click="selectCar()">Search</button>
+            </div>
 
-        <input class="showAreaCheckbox" id="capetownCheckbox" type="checkbox" :checked="showCapetownData" @click="showCapetownData = !showCapetownData">
-        <label for="capetownCheckbox">Capetown</label>
+            <div class="car-item" x-show="search && found">
+                <h3 x-text="selectedCar.make + ' ' + selectedCar.model"></h3>
+                <p x-text="'Registration: ' + selectedCar.reg_number"></p>
+                <p x-text="'Color: ' + selectedCar.color"></p>
+            </div>
+        </div>
 
-        <input class="showAreaCheckbox" id="kuilsriverCheckbox" type="checkbox" :checked="showKuilsriverData" @click="showKuilsriverData = !showKuilsriverData">
-        <label for="kuilsriverCheckbox">Kuilsriver</label>
+        <div class="filterSection">
 
-        <input class="showAreaCheckbox" id="otherPlacesCheckbox" type="checkbox" :checked="showOtherPlacesData" @click="showOtherPlacesData = !showOtherPlacesData">
-        <label for="otherPlacesCheckbox">Other Places</label>
+            
+            <button @click="filterVisible = !filterVisible">
+                <ion-icon name="funnel-outline"></ion-icon> Filter Areas
+            </button>
+
+
+            <div class="check" x-show="filterVisible">
+                
+                <div>
+                    <input class="showAreaCheckbox" id="paarlCheckbox" type="checkbox" :checked="showPaarlData"
+                        @click="showPaarlData = !showPaarlData">
+                    <label for="paarlCheckbox">Paarl</label>
+                </div>
+                <div>
+                    <input class="showAreaCheckbox" id="bellvilleCheckbox" type="checkbox" :checked="showBellvilleData"
+                        @click="showBellvilleData = !showBellvilleData">
+                    <label for="bellvilleCheckbox">Bellville</label>
+                </div>
+                <div>
+                    <input class="showAreaCheckbox" id="stellenboschCheckbox" type="checkbox"
+                        :checked="showStellenboschData" @click="showStellenboschData = !showStellenboschData">
+                    <label for="stellenboschCheckbox">Stellenbosch</label>
+                </div>
+                <div>
+                    <input class="showAreaCheckbox" id="malmesburyCheckbox" type="checkbox"
+                        :checked="showMalmesburyData" @click="showMalmesburyData = !showMalmesburyData">
+                    <label for="malmesburyCheckbox">Malmesbury</label>
+                </div>
+                <div>
+                    <input class="showAreaCheckbox" id="capetownCheckbox" type="checkbox" :checked="showCapetownData"
+                        @click="showCapetownData = !showCapetownData">
+                    <label for="capetownCheckbox">Capetown</label>
+                </div>
+                <div>
+                    <input class="showAreaCheckbox" id="kuilsriverCheckbox" type="checkbox"
+                        :checked="showKuilsriverData" @click="showKuilsriverData = !showKuilsriverData">
+                    <label for="kuilsriverCheckbox">Kuilsriver</label>
+                </div>
+                <div>
+                    <input class="showAreaCheckbox" id="otherPlacesCheckbox" type="checkbox"
+                        :checked="showOtherPlacesData" @click="showOtherPlacesData = !showOtherPlacesData">
+                    <label for="otherPlacesCheckbox">Other Places</label>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <div class="addCarsToData">
+                <div><strong>ADD A CAR</strong></div>
+                <div class="addIcon" x-show="!add"><ion-icon name="add-circle-outline" @click="add = true"></ion-icon>
+                </div>
+
+
+                <div x-show="add">
+                    <label for="registration">Registration: </label>
+                    <input x-model="regNumber" id="registration">
+
+                    <label for="make">Brand: </label>
+                    <input x-model=" carMake" id="make">
+
+                    <label for="model">Model: </label>
+                    <input x-model=" carModel" id="model">
+
+                    <label for="color">Color: </label>
+                    <input x-model="carColor" id="color">
+
+                    <button @click=" addCar()">Click to add a car</button>
+                    <button @click="resetValues(); add = false">Cancel</button>
+
+
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+
+
+    <h1 class="title"> CURD API</h1>
 
     <div class="data">
         <table class="carsData" style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
-                    <th style="border: 1px solid black; padding: 8px;">Make</th>
-                    <th style="border: 1px solid black; padding: 8px;">Model</th>
-                    <th style="border: 1px solid black; padding: 8px;">Registration</th>
-                    <th style="border: 1px solid black; padding: 8px;">Color</th>
+                    <th style="border: 1px solid black; background-color: rgb(95, 119, 255); padding: 8px;">Make</th>
+                    <th style="border: 1px solid black; background-color: rgb(95, 119, 255); padding: 8px;">Model</th>
+                    <th style="border: 1px solid black; background-color: rgb(95, 119, 255); padding: 8px;">Registration
+                    </th>
+                    <th style="border: 1px solid black; background-color: rgb(95, 119, 255); padding: 8px;">Color</th>
+                    <th style="border: 1px solid black; background-color: rgb(95, 119, 255); padding: 8px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +156,37 @@
                         <td style="border: 1px solid black; padding: 8px;" x-text="car.model"></td>
                         <td style="border: 1px solid black; padding: 8px;" x-text="car.reg_number"></td>
                         <td style="border: 1px solid black; padding: 8px;" x-text="car.color"></td>
+                        <td style="border: 1px solid black; padding: 8px;">
+                            <button
+                                @click="selectedCar = car; regNumber = car.reg_number; carMake = car.make; carModel = car.model; carColor = car.color; showPopup()">Edit</button>
+                            <button @click="selectedCar = car; regNumber = car.reg_number"
+                                x-on:click="removeCar()">Remove</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="addIcon">
+                                <ion-icon name="add-circle-outline"></ion-icon>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="addCarsToData">
+                                <label for="registration">Registration: </label>
+                                <input x-model="regNumber" id="registration">
+
+                                <label for="make">Brand: </label>
+                                <input x-model="carMake" id="make">
+
+                                <label for="model">Model: </label>
+                                <input x-model="carModel" id="model">
+
+                                <label for="color">Color: </label>
+                                <input x-model="carColor" id="color">
+
+                                <button @click="addCar()">Click to add a car</button>
+                            </div>
+                        </td>
                     </tr>
                 </template>
             </tbody>
@@ -76,89 +194,49 @@
     </div>
 
 
+    <div>
 
 
 
 
 
 
+        <div class="updateCar" x-show="update" @click.away="clearData()">
 
 
 
+            <div class="editFlex">
+
+                <div class="editPopUp">
+                    <label for="registration">Registration:</label>
+                    <input x-model="regNumber" id="registration" class="form-input">
+                </div>
+
+                <div class="editPopUp">
+                    <label for="make">Brand:</label>
+                    <input x-model="carMake" id="make" class="form-input">
+                </div>
+
+                <div class="editPopUp">
+                    <label for="model">Model:</label>
+                    <input x-model="carModel" id="model" class="form-input">
+                </div>
+
+
+                <div class="editPopUp">
+                    <label for="color">Color:</label>
+                    <input x-model="carColor" id="color" class="form-input">
+                </div>
+
+            </div>
 
 
 
-    <div class="addCarsToData">
-
-        <label for="registration">Registration: </label>
-        <input x-model="regNumber" id="registration">
-
-        <label for="make">Brand: </label>
-        <input x-model=" carMake" id="make">
-
-        <label for="model">Model: </label>
-        <input x-model=" carModel" id="model">
-
-        <label for="color">Color: </label>
-        <input x-model="carColor" id="color">
-
-        <button @click=" addCar()">Click to add a car</button>
-
-    </div>
-
-
-    <div class="selectCar">
-        <button @click="resetValues(); search = true">Clear data</button>
-
-
-        <div x-show="search">
-            <label for="registration">Registration: </label>
-            <input x-model="regNumber" id="registration">
-            <button @click=" selectCar()">Search</button>
+            <div style="display: flex; justify-content: space-between;">
+                <button @click="updateCar()">Edit car</button>
+                <button @click="clearData()">Cancel</button>
+            </div>
         </div>
-
-        <div class="car-item" x-show="search">
-            <h3 x-text="selectedCar.make + ' ' + selectedCar.model"></h3>
-            <p x-text="'Registration: ' + selectedCar.reg_number"></p>
-            <p x-text="'Color: ' + selectedCar.color"></p>
-        </div>
-
-    </div>
-
-
-    <div class="removeCars">
-
-
-        <button @click="resetValues(); remove = true">Clear data</button>
-
-        <div x-show="remove">
-            <label for="registration">Registration: </label>
-            <input x-model="regNumber" id="registration">
-        </div>
-        <button @click=" removeCar()">Remove</button>
-
-    </div>
-
-    <div class="updateCar">
-
-        <button @click="resetValues(); update = true">Clear data</button>
-
-        <div>
-            <label for="registration">Registration: </label>
-            <input x-model="regNumber" id="registration">
-
-            <label for="make">Brand: </label>
-            <input x-model=" carMake" id="make">
-
-            <label for="model">Model: </label>
-            <input x-model=" carModel" id="model">
-
-            <label for="color">Color: </label>
-            <input x-model="carColor" id="color">
-        </div>
-
-        <button @click="updateCar()">Edit car</button>
-    </div>
 
 </body>
 

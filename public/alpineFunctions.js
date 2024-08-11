@@ -7,19 +7,23 @@ document.addEventListener('alpine:init', () => {
             carMake: '',
             carModel: '',
             carColor: '',
-            selectedCar : {},
-            showPaarlData: false,
-            showBellvilleData: false,
-            showStellenboschData: false,
-            showMalmesburyData: false,
-            showKuilsriverData: false,
-            showCapetownData: false,
+            selectedCar: {},
+            showPaarlData: true,
+            showBellvilleData: true,
+            showStellenboschData: true,
+            showMalmesburyData: true,
+            showCapetownData: true,
+            showKuilsriverData: true,
+            showOtherPlacesData: true,
             loadData: true,
             showOtherPlacesData: false,
-            search:false,
+            search: false,
             remove: false,
             update: false,
-
+            add: false,
+            found: false,
+            sidebarVisible: false,
+            filterVisible: false,
 
             async getCarsAPI() {
                 try {
@@ -34,92 +38,68 @@ document.addEventListener('alpine:init', () => {
             async loadCarsData() {
                 this.carsData = await this.getCarsAPI();
                 console.log('CARS', this.carsData);
-                
             },
-
-
-
-
-
 
             async postCarsAPI() {
                 try {
-                   
                     const carData = {
                         color: this.carColor,
                         make: this.carMake,
                         model: this.carModel,
                         reg_number: this.regNumber
                     };
-            
-                   
+
                     const response = await axios.post(`http://localhost:${this.port}/cars/carsData`, carData);
                     return response.data; 
-                    this.carsData
                 } catch (error) {
                     console.error('Error posting car data:', error);
                     return null;
                 }
             },
 
-
-
             async addCar() {
                 const result = await this.postCarsAPI();
                 if (result) {
                     console.log('Car added successfully:', result);
-
-                    console.log('Added car', this.carsData);
-                    await this.loadCarsData();
+                    await this.loadCarsData(); 
                 } else {
                     console.error('Failed to add car.');
                 }
             },
-            
-
-
-
-
-
-
-
-
 
             async filterCarsAPI() {
                 try {
                     const response = await axios.get(`http://localhost:${this.port}/cars/carsData/reg_number`, {
                         params: { reg_number: this.regNumber }
                     });
-                    return response.data; // Return the found car data
+                    return response.data; 
                 } catch (error) {
                     console.error('Error filtering cars:', error);
-                    return null; // Return null or handle the error as needed
+                    return null; 
                 }
             },
-
 
             async selectCar() {
                 const car = await this.filterCarsAPI();
                 if (car) {
                     console.log('Selected car:', car);
                     this.selectedCar = car;
+                    this.found = true;
                 } else {
                     console.error('Car not found.');
+                    alert('CAR DOES NOT EXIST!');
+                    this.found = false;
                 }
             },
-
-            resetValues(){
-                this.regNumber = '',
-                this.carMake = '',
-                this.carModel = '',
-                this.carColor = '',
-                this.selectedCar = {}
-            },
-
             
 
-
-
+            resetValues() {
+                this.regNumber = '';
+                this.carMake = '';
+                this.carModel = '';
+                this.carColor = '';
+                this.selectedCar = {};
+            },
 
             async deleteCarsAPI() {
                 const url = `http://localhost:${this.port}/cars/carsData/reg_number?reg_number=${encodeURIComponent(this.regNumber)}`;
@@ -132,7 +112,7 @@ document.addEventListener('alpine:init', () => {
                     if (response.ok) {
                         const result = await response.text();
                         console.log(result);
-                        this.loadCarsData();
+                        await this.loadCarsData(); 
                     } else if (response.status === 404) {
                         const error = await response.json();
                         console.error(error.message);
@@ -153,87 +133,51 @@ document.addEventListener('alpine:init', () => {
                 }
             },
 
-
-
-            
-
-
-
             async updateCarsAPI() {
-                axios.put(`http://localhost:${this.port}/cars/carsData/reg_number`, {
-                    make: this.carMake,
-                    model: this.carModel,
-                    color:  this.carColor,
-
-
-                    
-                    
-                  
-                }, {
-                    params: { reg_number: this.regNumber }
-                })
-                    .then(response => {
-                        console.log('Car updated:', response.data);
-
-                        // Find and update the specific car in carsData
-                        const updatedCarIndex = this.carsData.findIndex(car => car.reg_number === this.regNumber);
-                        if (updatedCarIndex !== -1) {
-                            this.carsData[updatedCarIndex] = {
-                                reg_number: this.regNumber,
-                                make: this.make,
-                                model: this.Model,
-                                color: this.Color
-                            };
-                        }
-                    })
-                    .catch(error => {
-                        console.error('There was an error updating the car:', error);
+                try {
+                    const response = await axios.put(`http://localhost:${this.port}/cars/carsData/reg_number`, {
+                        make: this.carMake,
+                        model: this.carModel,
+                        color: this.carColor,
+                    }, {
+                        params: { reg_number: this.regNumber }
                     });
+
+                    console.log('Car updated:', response.data);
+
+                    // Update the specific car in carsData
+                    const updatedCarIndex = this.carsData.findIndex(car => car.reg_number === this.regNumber);
+                    if (updatedCarIndex !== -1) {
+                        this.carsData[updatedCarIndex] = {
+                            reg_number: this.regNumber,
+                            make: this.carMake, 
+                            model: this.carModel, 
+                            color: this.carColor   
+                        };
+                    }
+
+                    this.update = false;
+                } catch (error) {
+                    console.error('There was an error updating the car:', error);
+                }
             },
 
             async updateCar() {
-                const result = await this.updateCarsAPI();
-                if (result) {
-                    console.log('Car updated successfully:', result);
-                 this.postCarsAPI();
-                } else {
-                    console.error('Failed to update car.');
-                }
+                await this.updateCarsAPI(); 
             },
 
-
-          /*   async fetchMostPopularMake() {
-                try {
-                    const response = await axios.get('/api/mostPopularMake');
-                    return response.data["Favorite car"];
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                    return null; // Return null or a default value in case of error
-                }
+            showPopup() {
+                this.update = true; 
             },
-                async carApp() {
-
-
-                    this.fetchMostPopularMake();
-                    if ()
-                        return {
-                            favoriteCar: '',
-                        }
-                    }
- */
-
-
-
-
-
+            
+            clearData() {
+                this.resetValues(); 
+                this.update = false;
+            },
 
             async init() {
-                this. getCarsAPI();
-                await this.loadCarsData();
-
-
+                await this.loadCarsData(); 
             },
-
-        }
-    })
-})
+        };
+    });
+});
