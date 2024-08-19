@@ -24,6 +24,7 @@ document.addEventListener('alpine:init', () => {
             found: false,
             sidebarVisible: false,
             filterVisible: false,
+            showMostPopular: false,
 
             async getCarsAPI() {
                 try {
