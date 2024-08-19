@@ -120,10 +120,16 @@
 
         </div>
 
+        <div class="addCarsToData">
+            <p><strong>MOST POPULAR CAR</strong></p>
+            <button @click="mostPopular()">Most popular</button>
+            <p x-text="mostPopular"></p>
+        </div>
+
     </div>
 
 
-    <button @click="mostPopular()">Most popular</button>
+    
 
 
 
@@ -246,6 +252,10 @@
                 <button @click="clearData()">Cancel</button>
             </div>
         </div>
+
+
+
+        
 
 
 
