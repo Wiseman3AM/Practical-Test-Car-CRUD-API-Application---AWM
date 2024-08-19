@@ -51,7 +51,7 @@ document.addEventListener('alpine:init', () => {
                     };
 
                     const response = await axios.post(`/cars/carsData`, carData);
-                    return response.data; 
+                    return response.data;
                 } catch (error) {
                     console.error('Error posting car data:', error);
                     return null;
@@ -62,7 +62,7 @@ document.addEventListener('alpine:init', () => {
                 const result = await this.postCarsAPI();
                 if (result) {
                     console.log('Car added successfully:', result);
-                    await this.loadCarsData(); 
+                    await this.loadCarsData();
                 } else {
                     console.error('Failed to add car.');
                 }
@@ -73,10 +73,10 @@ document.addEventListener('alpine:init', () => {
                     const response = await axios.get(`/cars/carsData/reg_number`, {
                         params: { reg_number: this.regNumber }
                     });
-                    return response.data; 
+                    return response.data;
                 } catch (error) {
                     console.error('Error filtering cars:', error);
-                    return null; 
+                    return null;
                 }
             },
 
@@ -92,7 +92,7 @@ document.addEventListener('alpine:init', () => {
                     this.found = false;
                 }
             },
-            
+
 
             resetValues() {
                 this.regNumber = '';
@@ -113,7 +113,7 @@ document.addEventListener('alpine:init', () => {
                     if (response.ok) {
                         const result = await response.text();
                         console.log(result);
-                        await this.loadCarsData(); 
+                        await this.loadCarsData();
                     } else if (response.status === 404) {
                         const error = await response.json();
                         console.error(error.message);
@@ -151,9 +151,9 @@ document.addEventListener('alpine:init', () => {
                     if (updatedCarIndex !== -1) {
                         this.carsData[updatedCarIndex] = {
                             reg_number: this.regNumber,
-                            make: this.carMake, 
-                            model: this.carModel, 
-                            color: this.carColor   
+                            make: this.carMake,
+                            model: this.carModel,
+                            color: this.carColor
                         };
                     }
 
@@ -164,15 +164,15 @@ document.addEventListener('alpine:init', () => {
             },
 
             async updateCar() {
-                await this.updateCarsAPI(); 
+                await this.updateCarsAPI();
             },
 
             showPopup() {
-                this.update = true; 
+                this.update = true;
             },
-            
+
             clearData() {
-                this.resetValues(); 
+                this.resetValues();
                 this.update = false;
             },
 
@@ -186,16 +186,17 @@ document.addEventListener('alpine:init', () => {
                     console.error('Error:', error);
                 }
             },
-            
-            
-            mostPopular() {
-                this.fetchMostPopularCarAPI();
-            },
-            
 
-    
+
+            async mostPopular() {
+                this.fetchMostPopularCarAPI();
+                this.showMostPopular = true;
+            },
+
+
+
             async init() {
-                await this.loadCarsData(); 
+                await this.loadCarsData();
             },
         };
     });
