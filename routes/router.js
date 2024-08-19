@@ -79,9 +79,11 @@ router.put('/reg_number', (req, res) => {
 
 router.post('/mostPopularMake', (req, res) => {
   try {
-    const carsData = req.body.carsData; 
+    
+  
 
-    const popularCar = mostPopularCar(carsData);
+    const popularCar = mostPopularCar(cars);
+console.log(popularCar);
 
     res.json({
       popular_car: popularCar,

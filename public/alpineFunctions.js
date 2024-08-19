@@ -1,7 +1,6 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('functions', () => {
         return {
-            port: 3365,
             carsData: [],
             regNumber: '',
             carMake: '',
@@ -28,7 +27,7 @@ document.addEventListener('alpine:init', () => {
 
             async getCarsAPI() {
                 try {
-                    const response = await axios.get(`http://localhost:${this.port}/cars/carsData`);
+                    const response = await axios.get(`/cars/carsData`);
                     return response.data;
                 } catch (error) {
                     console.error('Error fetching cars data:', error);
@@ -50,7 +49,7 @@ document.addEventListener('alpine:init', () => {
                         reg_number: this.regNumber
                     };
 
-                    const response = await axios.post(`http://localhost:${this.port}/cars/carsData`, carData);
+                    const response = await axios.post(`/cars/carsData`, carData);
                     return response.data; 
                 } catch (error) {
                     console.error('Error posting car data:', error);
@@ -70,7 +69,7 @@ document.addEventListener('alpine:init', () => {
 
             async filterCarsAPI() {
                 try {
-                    const response = await axios.get(`http://localhost:${this.port}/cars/carsData/reg_number`, {
+                    const response = await axios.get(`/cars/carsData/reg_number`, {
                         params: { reg_number: this.regNumber }
                     });
                     return response.data; 
@@ -103,7 +102,7 @@ document.addEventListener('alpine:init', () => {
             },
 
             async deleteCarsAPI() {
-                const url = `http://localhost:${this.port}/cars/carsData/reg_number?reg_number=${encodeURIComponent(this.regNumber)}`;
+                const url = `/cars/carsData/reg_number?reg_number=${encodeURIComponent(this.regNumber)}`;
 
                 try {
                     const response = await fetch(url, {
@@ -136,7 +135,7 @@ document.addEventListener('alpine:init', () => {
 
             async updateCarsAPI() {
                 try {
-                    const response = await axios.put(`http://localhost:${this.port}/cars/carsData/reg_number`, {
+                    const response = await axios.put(`/cars/carsData/reg_number`, {
                         make: this.carMake,
                         model: this.carModel,
                         color: this.carColor,
@@ -179,9 +178,7 @@ document.addEventListener('alpine:init', () => {
 
             async fetchMostPopularCarAPI() {
                 try {
-                    const response = await axios.post(`http://localhost:${this.port}/cars/carsData/mostPopularMake`, {
-                        carsData: this.carsData
-                    });
+                    const response = await axios.post(`/cars/carsData/mostPopularMake`);
                     this.mostPopular = response.data.popular_car;
                     console.log('Most popular make:', this.mostPopular);
                 } catch (error) {

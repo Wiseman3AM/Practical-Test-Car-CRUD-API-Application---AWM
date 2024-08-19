@@ -1,5 +1,5 @@
 // Function to identify the most popular car make
-function mostPopularCar() {
+function mostPopularCar(cars) {
     const makeCounter = {};
   
     for (const car of cars) {
